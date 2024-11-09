@@ -1,0 +1,52 @@
+  #include <stdio.h> 
+#include <conio.h> 
+ 
+struct sjf { 
+    int pid; 
+    int btime; 
+    int wtime; 
+    int ttime; 
+} p[10]; 
+ 
+void main() { 
+   int i, j, n; 
+   int totwtime = 0; 
+   int totttime = 0; 
+   struct sjf temp;  
+ 
+ printf("SJF Scheduling\n"); 
+ printf("Enter the number of processes: "); 
+ scanf("%d", &n); 
+ for(i = 0; i < n; i++) { 
+ printf("Enter the process ID: "); 
+ scanf("%d", &p[i].pid); 
+ printf("Enter the burst time: "); 
+ scanf("%d", &p[i].btime); 
+  } 
+ 
+  for(i = 0; i < n - 1; i++) { 
+  for(j = i + 1; j < n; j++) { 
+  if(p[i].btime > p[j].btime) { 
+  temp = p[i];    
+  p[i] = p[j];     
+  p[j] = temp;    
+  } 
+  } 
+  } 
+ p[0].wtime = 0; 
+ p[0].ttime = p[0].btime; 
+ totttime += p[0].ttime;  
+ 
+ for(i = 1; i < n; i++) { 
+ p[i].wtime = p[i - 1].wtime + p[i - 1].btime; 
+ p[i].ttime = p[i].wtime + p[i].btime; 
+ totwtime += p[i].wtime; 
+ totttime += p[i].ttime; 
+ } 
+ 
+ printf("\nTotal waiting time: %d\n", totwtime); 
+ printf("Average waiting time: %.2f\n", (float)totwtime / n); 
+ printf("Total turnaround time: %d\n", totttime); 
+ printf("Average turnaround time: %.2f\n", (float)totttime / n); 
+getch(); 
+}
