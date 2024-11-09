@@ -1,0 +1,84 @@
+#include<stdio.h> 
+#include<stdlib.h> 
+#include<conio.h> 
+int mutex=1; 
+int full=0; 
+int empty,x=0; 
+void producer() 
+{ --mutex; 
+++full; --empty; 
+x++; 
+printf("\n producer consumes""item%d",x); 
+++mutex; 
+} 
+void consumer() 
+{ --mutex; --full; 
+++empty; 
+printf("\n consumer consumes:""item%d",x); 
+x--; 
+++mutex; 
+} 
+void main() 
+{ 
+int n,i,buffersize; 
+clrscr(); 
+printf("enter the buffersize"); 
+scanf("%d",&buffersize); 
+empty=buffersize; 
+printf("\npress 1 for producer""\n press 2 for consumer""\n press 3 for 
+exit"); 
+for(i=1;i>0;i++) 
+{ 
+printf("\n enter your choice:"); 
+scanf("%d",&n); 
+switch(n) 
+{ 
+case 1:if((mutex==1)&&(empty!=0)) 
+{ 
+producer(); 
+} 
+else 
+{ 
+printf("buffer is full"); 
+} 
+break; 
+case 2:if((mutex==1)&&(full!=0)) 
+{ 
+ 
+ 
+break; 
+case 2:if((mutex==1)&&(full!=0)) 
+{ 
+consumer(); 
+} 
+else 
+{ 
+printf("buffer is empty"); 
+} 
+break; 
+case 3:exit(0); 
+break; 
+} 
+} 
+}
+
+input Enter your choice: 1 
+Buffer is full! 
+Enter your choice: 2 
+ 
+Consumer consumes item 5 
+Enter your choice: 2 
+ 
+Consumer consumes item 4 
+Enter your choice: 2 
+ 
+Consumer consumes item 3 
+Enter your choice: 2 
+ 
+Consumer consumes item 2 
+Enter your choice: 2 
+ 
+Consumer consumes item 1 
+Enter your choice: 2 
+Buffer is empty! 
+Enter your choice: 3
